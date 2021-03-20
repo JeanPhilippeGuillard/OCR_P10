@@ -1,0 +1,212 @@
+[
+    {
+        "query": "I'd like to book a trip to Atlantis from Caprica on Saturday, August 13, 2016 for 8 adults. I have a tight budget of 1700.",
+        "prediction": {
+            "topIntent": "BookFlight",
+            "intents": {
+                "BookFlight": {
+                    "score": 0.9983896
+                },
+                "None": {
+                    "score": 0.0040095784
+                },
+                "Confirm": {
+                    "score": 0.000544467
+                },
+                "Greetings": {
+                    "score": 0.00028200148
+                }
+            },
+            "entities": {
+                "From": [
+                    {}
+                ],
+                "To": [
+                    {
+                        "Airport": [
+                            {
+                                "value": "Atlantis",
+                                "type": "city"
+                            }
+                        ],
+                        "$instance": {
+                            "Airport": [
+                                {
+                                    "type": "builtin.geographyV2.city",
+                                    "text": "Atlantis",
+                                    "startIndex": 27,
+                                    "length": 8,
+                                    "score": 0.97688043,
+                                    "modelTypeId": 1,
+                                    "modelType": "Entity Extractor",
+                                    "recognitionSources": [
+                                        "model"
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "Departure_date": [
+                    [
+                        {
+                            "timex": "2016-08-13",
+                            "type": "date",
+                            "value": "2016-08-13"
+                        }
+                    ]
+                ],
+                "datetimeV2": [
+                    {
+                        "type": "daterange",
+                        "values": [
+                            {
+                                "timex": "1700",
+                                "resolution": [
+                                    {
+                                        "start": "1700-01-01",
+                                        "end": "1701-01-01"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "$instance": {
+                    "From": [
+                        {
+                            "type": "From",
+                            "text": "Caprica",
+                            "startIndex": 41,
+                            "length": 7,
+                            "score": 0.9845943,
+                            "modelTypeId": 1,
+                            "modelType": "Entity Extractor",
+                            "recognitionSources": [
+                                "model"
+                            ]
+                        }
+                    ],
+                    "To": [
+                        {
+                            "type": "To",
+                            "text": "Atlantis",
+                            "startIndex": 27,
+                            "length": 8,
+                            "score": 0.9939315,
+                            "modelTypeId": 1,
+                            "modelType": "Entity Extractor",
+                            "recognitionSources": [
+                                "model"
+                            ]
+                        }
+                    ],
+                    "Departure_date": [
+                        {
+                            "type": "builtin.datetimeV2.date",
+                            "text": "Saturday, August 13, 2016",
+                            "startIndex": 52,
+                            "length": 25,
+                            "score": 0.9575539,
+                            "modelTypeId": 1,
+                            "modelType": "Entity Extractor",
+                            "recognitionSources": [
+                                "model"
+                            ]
+                        }
+                    ],
+                    "datetimeV2": [
+                        {
+                            "type": "builtin.datetimeV2.daterange",
+                            "text": "1700",
+                            "startIndex": 117,
+                            "length": 4,
+                            "modelTypeId": 2,
+                            "modelType": "Prebuilt Entity Extractor",
+                            "recognitionSources": [
+                                "model"
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "query": "Hello, I am looking to book a vacation from Gotham City to Mos Eisley for $2100.",
+        "prediction": {
+            "topIntent": "BookFlight",
+            "intents": {
+                "BookFlight": {
+                    "score": 0.9907183
+                },
+                "None": {
+                    "score": 0.005230526
+                },
+                "Greetings": {
+                    "score": 0.0017023904
+                },
+                "Confirm": {
+                    "score": 0.0010470843
+                }
+            },
+            "entities": {
+                "From": [
+                    {}
+                ],
+                "To": [
+                    {}
+                ],
+                "money": [
+                    {
+                        "number": 2100,
+                        "units": "Dollar"
+                    }
+                ],
+                "$instance": {
+                    "From": [
+                        {
+                            "type": "From",
+                            "text": "Gotham City",
+                            "startIndex": 44,
+                            "length": 11,
+                            "score": 0.9827011,
+                            "modelTypeId": 1,
+                            "modelType": "Entity Extractor",
+                            "recognitionSources": [
+                                "model"
+                            ]
+                        }
+                    ],
+                    "To": [
+                        {
+                            "type": "To",
+                            "text": "Mos Eisley",
+                            "startIndex": 59,
+                            "length": 10,
+                            "score": 0.98797065,
+                            "modelTypeId": 1,
+                            "modelType": "Entity Extractor",
+                            "recognitionSources": [
+                                "model"
+                            ]
+                        }
+                    ],
+                    "money": [
+                        {
+                            "type": "builtin.currency",
+                            "text": "$2100",
+                            "startIndex": 74,
+                            "length": 5,
+                            "modelTypeId": 2,
+                            "modelType": "Prebuilt Entity Extractor",
+                            "recognitionSources": [
+                                "model"
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    }
+]

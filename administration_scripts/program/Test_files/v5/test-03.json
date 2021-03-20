@@ -1,0 +1,319 @@
+[
+    {
+        "text": "I'd like to book a trip to Atlantis from Caprica on Saturday, August 13, 2016 for 8 adults. I have a tight budget of 1700.",
+        "intent": "BookFlight",
+        "entities": [
+            {
+                "entity": "To",
+                "startPos": 27,
+                "endPos": 35,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 27,
+                        "endPos": 35
+                    }
+                ]
+            },
+            {
+                "entity": "From",
+                "startPos": 41,
+                "endPos": 48,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 41,
+                        "endPos": 48
+                    }
+                ]
+            },
+            {
+                "entity": "Departure_date",
+                "startPos": 52,
+                "endPos": 77
+            },
+            {
+                "entity": "budget",
+                "startPos": 117,
+                "endPos": 121
+            }
+        ]
+    },
+    {
+        "text": "Hello, I am looking to book a vacation from Gotham City to Mos Eisley for $2100.",
+        "intent": "BookFlight",
+        "entities": [
+            {
+                "entity": "To",
+                "startPos": 59,
+                "endPos": 69,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 59,
+                        "endPos": 69
+                    }
+                ]
+            },
+            {
+                "entity": "From",
+                "startPos": 44,
+                "endPos": 55,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 44,
+                        "endPos": 55
+                    }
+                ]
+            },
+            {
+                "entity": "budget",
+                "startPos": 75,
+                "endPos": 79
+            }
+        ]
+    },
+    {
+        "text": "Hello there i am looking to go on a vacation with my family to Gotham City, can you help me?",
+        "intent": "BookFlight",
+        "entities": [
+            {
+                "entity": "To",
+                "startPos": 63,
+                "endPos": 74,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 63,
+                        "endPos": 74
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "text": "Hi I'd like to go to Caprica from Busan, between Sunday August 21, 2016 and Wednesday August 31, 2016",
+        "intent": "BookFlight",
+        "entities": [
+            {
+                "entity": "To",
+                "startPos": 21,
+                "endPos": 28,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 21,
+                        "endPos": 28
+                    }
+                ]
+            },
+            {
+                "entity": "From",
+                "startPos": 34,
+                "endPos": 39,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 34,
+                        "endPos": 39
+                    }
+                ]
+            },
+            {
+                "entity": "Departure_date",
+                "startPos": 49,
+                "endPos": 71
+            },
+            {
+                "entity": "Return_date",
+                "startPos": 76,
+                "endPos": 101
+            }
+        ]
+    },
+    {
+        "text": "Hello, I am looking to book a trip for 2 adults and 6 children for $21,300 or less. We are departing from Kochi for Denver.",
+        "intent": "BookFlight",
+        "entities": [
+            {
+                "entity": "To",
+                "startPos": 116,
+                "endPos": 122,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 116,
+                        "endPos": 122
+                    }
+                ]
+            },
+            {
+                "entity": "From",
+                "startPos": 106,
+                "endPos": 111,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 106,
+                        "endPos": 111
+                    }
+                ]
+            },
+            {
+                "entity": "budget",
+                "startPos": 67,
+                "endPos": 74
+            }
+        ]
+    },
+    {
+        "text": "Hey, i Want to go to St. Louis on the 17th of August",
+        "intent": "BookFlight",
+        "entities": [
+            {
+                "entity": "To",
+                "startPos": 21,
+                "endPos": 30,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 21,
+                        "endPos": 30
+                    }
+                ]
+            },
+            {
+                "entity": "Departure_date",
+                "startPos": 38,
+                "endPos": 52
+            }
+        ]
+    },
+    {
+        "text": "I'm looking for a trip to Gotham City leaving from Kakariko Village on Saturday, August 13, 2016. 3 adults for no more than $2400 USD.",
+        "intent": "BookFlight",
+        "entities": [
+            {
+                "entity": "To",
+                "startPos": 26,
+                "endPos": 37,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 26,
+                        "endPos": 37
+                    }
+                ]
+            },
+            {
+                "entity": "From",
+                "startPos": 51,
+                "endPos": 67,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 51,
+                        "endPos": 67
+                    }
+                ]
+            },
+            {
+                "entity": "Departure_date",
+                "startPos": 71,
+                "endPos": 96
+            },
+            {
+                "entity": "budget",
+                "startPos": 124,
+                "endPos": 133
+            }
+        ]
+    },
+    {
+        "text": "Hello, I would like to book a 2-week trip leaving from Melbourne on August 27. I would like to go to Mannheim.",
+        "intent": "BookFlight",
+        "entities": [
+            {
+                "entity": "To",
+                "startPos": 101,
+                "endPos": 109,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 101,
+                        "endPos": 109
+                    }
+                ]
+            },
+            {
+                "entity": "From",
+                "startPos": 55,
+                "endPos": 64,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 55,
+                        "endPos": 64
+                    }
+                ]
+            },
+            {
+                "entity": "Departure_date",
+                "startPos": 68,
+                "endPos": 77
+            }
+        ]
+    },
+    {
+        "text": "Hello, I am planning to book a trip to pittsborgh",
+        "intent": "BookFlight",
+        "entities": [
+            {
+                "entity": "To",
+                "startPos": 39,
+                "endPos": 49,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 39,
+                        "endPos": 49
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "text": "Hi, I need to go to Mos Eisley for a wedding, leaving on Saturday, August 13, 2016 and returning on Tuesday, August 16, 2016. Preferably for $3700.",
+        "intent": "BookFlight",
+        "entities": [
+            {
+                "entity": "To",
+                "startPos": 20,
+                "endPos": 30,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 20,
+                        "endPos": 30
+                    }
+                ]
+            },
+            {
+                "entity": "Departure_date",
+                "startPos": 57,
+                "endPos": 82
+            },
+            {
+                "entity": "Return_date",
+                "startPos": 100,
+                "endPos": 124
+            },
+            {
+                "entity": "budget",
+                "startPos": 141,
+                "endPos": 146
+            }
+        ]
+    }
+]

@@ -1,0 +1,1 @@
+version de luis_traingin initiale : Luis_training_v2

@@ -1,0 +1,72 @@
+[
+    {
+        "text": "I'd like to book a trip to Atlantis from Caprica on Saturday, August 13, 2016 for 8 adults. I have a tight budget of 1700.",
+        "intent": "BookFlight",
+        "entities": [
+            {
+                "entity": "To",
+                "startPos": 27,
+                "endPos": 35,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 27,
+                        "endPos": 35
+                    }
+                ]
+            },
+            {
+                "entity": "From",
+                "startPos": 41,
+                "endPos": 48,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 41,
+                        "endPos": 48
+                    }
+                ]
+            },
+            {
+                "entity": "budget",
+                "startPos": 117,
+                "endPos": 121
+            }
+        ]
+    },
+    {
+        "text": "Hello, I am looking to book a vacation from Gotham City to Mos Eisley for $2100.",
+        "intent": "BookFlight",
+        "entities": [
+            {
+                "entity": "To",
+                "startPos": 59,
+                "endPos": 69,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 59,
+                        "endPos": 69
+                    }
+                ]
+            },
+            {
+                "entity": "From",
+                "startPos": 44,
+                "endPos": 55,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 44,
+                        "endPos": 55
+                    }
+                ]
+            },
+            {
+                "entity": "budget",
+                "startPos": 75,
+                "endPos": 79
+            }
+        ]
+    }
+]

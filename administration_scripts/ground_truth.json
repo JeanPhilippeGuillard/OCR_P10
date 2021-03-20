@@ -1,0 +1,37 @@
+[
+    {
+        "text": "I'd like to book a trip to Atlantis from Caprica on Saturday, August 13, 2016 for 8 adults. I have a tight budget of 1700.",
+        "intent": "BookFlight",
+        "entities": [
+            {
+                "entity": "To",
+                "startPos": 27,
+                "endPos": 35,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 27,
+                        "endPos": 35
+                    }
+                ]
+            },
+            {
+                "entity": "From",
+                "startPos": 41,
+                "endPos": 48,
+                "children": [
+                    {
+                        "entity": "Airport",
+                        "startPos": 41,
+                        "endPos": 48
+                    }
+                ]
+            },
+            {
+                "entity": "budget",
+                "startPos": 117,
+                "endPos": 121
+            }
+        ]
+    }
+]

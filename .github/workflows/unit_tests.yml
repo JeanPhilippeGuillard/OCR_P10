@@ -26,4 +26,4 @@ jobs:
 
     - name: Test with pytest
       run: |
-        pytest ./administration_scripts/tests.py
+        pytest ./administration_scripts/test.py

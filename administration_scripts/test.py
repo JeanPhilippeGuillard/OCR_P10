@@ -8,7 +8,7 @@ class MockResponse:
 
     @staticmethod
     def json():
-        file_name = "predictions.json"
+        file_name = "./predictions.json"
         with open(file_name, "r") as f:
             json_data = json.load(f)
         return json_data[0]
@@ -20,7 +20,7 @@ class TestPerformanceEvaluator:
     in the same folder as this code.
     """
 
-    ground_truth_file_name = "ground_truth.json"
+    ground_truth_file_name = "./ground_truth.json"
     with open(ground_truth_file_name, 'r') as f:
         ground_truth = json.load(f)
 
@@ -40,7 +40,7 @@ class TestPerformanceEvaluator:
     # get prediction
     def test_get_prediction(self, mock_response):
         
-        prediction_file_name = "prediction.json"
+        prediction_file_name = "./prediction.json"
         with open(prediction_file_name, "r") as f:
             target_prediction = json.load(f)
         prediction = self.evaluator.get_prediction(self.text)

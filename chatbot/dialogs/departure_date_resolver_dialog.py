@@ -1,10 +1,11 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
+from re import template
 from datatypes_date_time.timex import Timex
 
-from botbuilder.core import MessageFactory
-from botbuilder.dialogs import WaterfallDialog, DialogTurnResult, WaterfallStepContext
+from botbuilder.core import MessageFactory, BotTelemetryClient, NullTelemetryClient
+from botbuilder.dialogs import WaterfallDialog, DialogTurnResult, WaterfallStepContext, waterfall_dialog
 from botbuilder.dialogs.prompts import (
     DateTimePrompt,
     PromptValidatorContext,
@@ -13,24 +14,32 @@ from botbuilder.dialogs.prompts import (
 )
 from botbuilder.schema import InputHints
 from .cancel_and_help_dialog import CancelAndHelpDialog
+from dialogs import check_date_dialog
 
 
 class DepartureDateResolverDialog(CancelAndHelpDialog):
-    def __init__(self, dialog_id: str = None):
+    def __init__(self, dialog_id: str = None,
+                 telemetry_client : BotTelemetryClient=NullTelemetryClient()):
         super(DepartureDateResolverDialog, self).__init__(
-            dialog_id or DepartureDateResolverDialog.__name__
+            dialog_id or DepartureDateResolverDialog.__name__,
+            telemetry_client
         )
+        self.telemetry_client = telemetry_client
 
-        self.add_dialog(
-            DateTimePrompt(
-                DateTimePrompt.__name__, DepartureDateResolverDialog.datetime_prompt_validator
+        date_time_prompt = DateTimePrompt(
+                DateTimePrompt.__name__,
+                DepartureDateResolverDialog.datetime_prompt_validator
             )
-        )
-        self.add_dialog(
-            WaterfallDialog(
-                WaterfallDialog.__name__ + "2", [self.initial_step, self.final_step]
+        date_time_prompt.telemetry_client = self.telemetry_client
+
+        waterfall_dialog = WaterfallDialog(
+                WaterfallDialog.__name__ + "2",
+                [self.initial_step, self.final_step]
             )
-        )
+        waterfall_dialog.telemetry_client = self.telemetry_client
+
+        self.add_dialog(date_time_prompt)
+        self.add_dialog(waterfall_dialog)
 
         self.initial_dialog_id = WaterfallDialog.__name__ + "2"
 
@@ -45,7 +54,7 @@ class DepartureDateResolverDialog(CancelAndHelpDialog):
         )
 
         reprompt_msg_text = "I'm sorry, for best results, please enter your travel date including the month, " \
-                            "day and year. "
+                            "day and year(i.e 12/15/21). "
         reprompt_msg = MessageFactory.text(
             reprompt_msg_text, reprompt_msg_text, InputHints.expecting_input
         )
@@ -74,7 +83,6 @@ class DepartureDateResolverDialog(CancelAndHelpDialog):
         if prompt_context.recognized.succeeded:
             timex = prompt_context.recognized.value[0].timex.split("T")[0]
 
-            # TODO: Needs TimexProperty
             return "definite" in Timex(timex).types
 
         return False

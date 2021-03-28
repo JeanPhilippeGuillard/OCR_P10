@@ -7,4 +7,4 @@ from .departure_date_resolver_dialog import DepartureDateResolverDialog
 from .return_date_resolver_dialog import ReturnDateResolverDialog
 from .main_dialog import MainDialog
 
-__all__ = ["BookingDialog", "CancelAndHelpDialog", "DepartureDateResolverDialog", "ReturnDateResolver", "MainDialog"]
+__all__ = ["BookingDialog", "CancelAndHelpDialog", "DepartureDateResolverDialog", "ReturnDateResolverDialog", "MainDialog"]

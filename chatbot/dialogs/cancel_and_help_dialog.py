@@ -8,12 +8,14 @@ from botbuilder.dialogs import (
     DialogTurnStatus,
 )
 from botbuilder.schema import ActivityTypes, InputHints
-from botbuilder.core import MessageFactory
+from botbuilder.core import MessageFactory, BotTelemetryClient, NullTelemetryClient
 
 
 class CancelAndHelpDialog(ComponentDialog):
-    def __init__(self, dialog_id: str):
+    def __init__(self, dialog_id: str,
+                telemetry_client: BotTelemetryClient=NullTelemetryClient()):
         super(CancelAndHelpDialog, self).__init__(dialog_id)
+        self.telemetry_client = telemetry_client
 
     async def on_continue_dialog(self, inner_dc: DialogContext) -> DialogTurnResult:
         result = await self.interrupt(inner_dc)

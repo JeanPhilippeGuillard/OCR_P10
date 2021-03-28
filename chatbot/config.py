@@ -13,8 +13,15 @@ class DefaultConfig:
     PORT = 3978
     APP_ID = os.environ.get("MicrosoftAppId", "")
     APP_PASSWORD = os.environ.get("MicrosoftAppPassword", "")
-    #LUIS_APP_ID = os.environ.get("LuisAppId", "536910f3-7d68-4ec9-b0d8-d8f4bdf46f4f") # FlightBooking-v5
-    LUIS_APP_ID = os.environ.get("LuisAppId", "631685be-cc61-45bc-b327-ee93bf1cdeca") # FlightBooking-v5-SDK
-    LUIS_API_KEY = os.environ.get("LuisAPIKey", "726d4526485546eea8d2331a5e017ac8") # jpg-cognitive-predicion
+    
+ 
+    LUIS_APP_ID = os.environ.get("LuisAppId", "2ab9cc99-4a8f-465e-8e5a-88356c84dc84") # FlightBooking-v13-SDK
+    LUIS_API_KEY = os.environ.get("LuisAPIKey", "39e2caa19666427ebe7835c12e70fbd5") # jpg-luis-2-authoring
+    INSTRUMENTATION_KEY = os.environ.get("INSTRUMENTATION_KEY", "51e36b9b-70cc-41c1-b656-4203b1d62b62") # jpg-flightbooking-v1
+
+
     # LUIS endpoint host name, ie "westus.api.cognitive.microsoft.com"
     LUIS_API_HOST_NAME = os.environ.get("LuisAPIHostName", "westeurope.api.cognitive.microsoft.com")
+    #LUIS_API_HOST_NAME = "westeurope.api.cognitive.microsoft.com"
+
+    

@@ -5,10 +5,15 @@ from botbuilder.dialogs import (
     ComponentDialog,
     WaterfallDialog,
     WaterfallStepContext,
-    DialogTurnResult,
+    DialogTurnResult, waterfall_dialog,
 )
 from botbuilder.dialogs.prompts import TextPrompt, PromptOptions
-from botbuilder.core import MessageFactory, TurnContext
+from botbuilder.core import (
+    MessageFactory,
+    TurnContext,
+    BotTelemetryClient,
+    NullTelemetryClient)
+
 from botbuilder.schema import InputHints
 
 from booking_details import BookingDetails
@@ -19,20 +24,31 @@ from .booking_dialog import BookingDialog
 
 class MainDialog(ComponentDialog):
     def __init__(
-        self, luis_recognizer: FlightBookingRecognizer, booking_dialog: BookingDialog
+        self,
+        luis_recognizer: FlightBookingRecognizer,
+        booking_dialog: BookingDialog,
+        telemetry_client: BotTelemetryClient=None
     ):
         super(MainDialog, self).__init__(MainDialog.__name__)
+        self.telemetry_client = telemetry_client
 
         self._luis_recognizer = luis_recognizer
         self._booking_dialog_id = booking_dialog.id
 
-        self.add_dialog(TextPrompt(TextPrompt.__name__))
-        self.add_dialog(booking_dialog)
-        self.add_dialog(
-            WaterfallDialog(
-                "WFDialog", [self.intro_step, self.act_step, self.final_step]
+        text_prompt = TextPrompt(TextPrompt.__name__)
+        text_prompt.telemetry_client = self.telemetry_client
+
+        booking_dialog.telemetry_client = self.telemetry_client
+
+        waterfall_dialog = WaterfallDialog(
+                "WFDialog",
+                [self.intro_step, self.act_step, self.final_step]
             )
-        )
+        waterfall_dialog.telemetry_client = self.telemetry_client
+        
+        self.add_dialog(text_prompt)
+        self.add_dialog(booking_dialog)
+        self.add_dialog(waterfall_dialog)
 
         self.initial_dialog_id = "WFDialog"
 
@@ -74,19 +90,19 @@ class MainDialog(ComponentDialog):
 
         if intent == Intent.BOOK_FLIGHT.value and luis_result:
             # Show a warning for Origin and Destination if we can't resolve them.
-            await MainDialog._show_warning_for_unsupported_cities(
+            """await MainDialog._show_warning_for_unsupported_cities(
                 step_context.context, luis_result
-            )
+            )"""
 
             # Run the BookingDialog giving it whatever details we have from the LUIS call.
             return await step_context.begin_dialog(self._booking_dialog_id, luis_result)
 
-        if intent == Intent.GET_WEATHER.value:
-            get_weather_text = "TODO: get weather flow here"
-            get_weather_message = MessageFactory.text(
-                get_weather_text, get_weather_text, InputHints.ignoring_input
-            )
-            await step_context.context.send_activity(get_weather_message)
+            """if intent == Intent.GET_WEATHER.value:
+                get_weather_text = "TODO: get weather flow here"
+                get_weather_message = MessageFactory.text(
+                    get_weather_text, get_weather_text, InputHints.ignoring_input
+                )
+                await step_context.context.send_activity(get_weather_message)"""
 
         else:
             didnt_understand_text = (
@@ -117,7 +133,7 @@ class MainDialog(ComponentDialog):
         prompt_message = "What else can I do for you?"
         return await step_context.replace_dialog(self.id, prompt_message)
 
-    @staticmethod
+    """@staticmethod
     async def _show_warning_for_unsupported_cities(
         context: TurnContext, luis_result: BookingDetails
     ) -> None:
@@ -129,4 +145,4 @@ class MainDialog(ComponentDialog):
             message = MessageFactory.text(
                 message_text, message_text, InputHints.ignoring_input
             )
-            await context.send_activity(message)
+            await context.send_activity(message)"""

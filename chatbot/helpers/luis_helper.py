@@ -4,14 +4,13 @@ from enum import Enum
 from typing import Dict
 from botbuilder.ai.luis import LuisRecognizer
 from botbuilder.core import IntentScore, TopIntent, TurnContext
-
 from booking_details import BookingDetails
 
 
 class Intent(Enum):
     BOOK_FLIGHT = "BookFlight"
-    CANCEL = "Cancel"
-    GET_WEATHER = "GetWeather"
+    CONFIRM = "Confirm"
+    GREETINGS = "Greetings"
     NONE_INTENT = "NoneIntent"
 
 
@@ -41,7 +40,7 @@ class LuisHelper:
         recognizer_result = await luis_recognizer.recognize(turn_context)
 
 
-        recognizer_result = await luis_recognizer.recognize(turn_context)
+        #recognizer_result = await luis_recognizer.recognize(turn_context)
 
         intent = (
             sorted(
@@ -79,7 +78,7 @@ class LuisHelper:
                 "budget", []
             )
             if len(budget_entity) > 0:
-                result.origin = budget_entity[0]["text"].capitalize()
+                result.budget = budget_entity[0]["text"].capitalize()
 
             # This value will be a TIMEX. And we are only interested in a Date so grab the first result and drop
             # the Time part. TIMEX is a format that represents DateTime expressions that include some ambiguity.

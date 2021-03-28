@@ -1,10 +1,11 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
+from re import template
 from datatypes_date_time.timex import Timex
 
-from botbuilder.core import MessageFactory
-from botbuilder.dialogs import WaterfallDialog, DialogTurnResult, WaterfallStepContext
+from botbuilder.core import MessageFactory, BotTelemetryClient, NullTelemetryClient
+from botbuilder.dialogs import WaterfallDialog, DialogTurnResult, WaterfallStepContext, waterfall_dialog
 from botbuilder.dialogs.prompts import (
     DateTimePrompt,
     PromptValidatorContext,
@@ -16,21 +17,27 @@ from .cancel_and_help_dialog import CancelAndHelpDialog
 
 
 class ReturnDateResolverDialog(CancelAndHelpDialog):
-    def __init__(self, dialog_id: str = None):
+    def __init__(self, dialog_id: str = None,
+                telemetry_client: BotTelemetryClient=NullTelemetryClient()):
         super(ReturnDateResolverDialog, self).__init__(
-            dialog_id or ReturnDateResolverDialog.__name__
+            dialog_id or ReturnDateResolverDialog.__name__, telemetry_client
         )
+        self.telemetry_client = telemetry_client
 
-        self.add_dialog(
-            DateTimePrompt(
-                DateTimePrompt.__name__, ReturnDateResolverDialog.datetime_prompt_validator
+        date_time_prompt = DateTimePrompt(
+                DateTimePrompt.__name__,
+                ReturnDateResolverDialog.datetime_prompt_validator
+                )
+        date_time_prompt.telemetry_client = self.telemetry_client
+        
+        waterfall_dialog = WaterfallDialog(
+                WaterfallDialog.__name__ + "2",
+                [self.initial_step, self.final_step]
             )
-        )
-        self.add_dialog(
-            WaterfallDialog(
-                WaterfallDialog.__name__ + "2", [self.initial_step, self.final_step]
-            )
-        )
+        waterfall_dialog.telemetry_client = self.telemetry_client
+
+        self.add_dialog(date_time_prompt)
+        self.add_dialog(waterfall_dialog)
 
         self.initial_dialog_id = WaterfallDialog.__name__ + "2"
 

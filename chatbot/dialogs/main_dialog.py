@@ -72,9 +72,13 @@ class MainDialog(ComponentDialog):
             message_text, message_text, InputHints.expecting_input
         )
 
-        return await step_context.prompt(
+        answer = await step_context.prompt(
             TextPrompt.__name__, PromptOptions(prompt=prompt_message)
         )
+        """turn_text = step_context.context.activity.text
+        print("Turn input", turn_text)
+        self.telemetry_client.track_trace("Turn input", {"Turn input": turn_text}, 0)"""
+        return answer
 
     async def act_step(self, step_context: WaterfallStepContext) -> DialogTurnResult:
         if not self._luis_recognizer.is_configured:
@@ -87,6 +91,9 @@ class MainDialog(ComponentDialog):
         intent, luis_result = await LuisHelper.execute_luis_query(
             self._luis_recognizer, step_context.context
         )
+        luis_input = step_context.context.activity.text
+        print("Luis input : ", luis_input)
+        self.telemetry_client.track_trace("Luis input", {"Luis input": luis_input})
 
         if intent == Intent.BOOK_FLIGHT.value and luis_result:
             # Show a warning for Origin and Destination if we can't resolve them.

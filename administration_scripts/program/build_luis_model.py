@@ -6,28 +6,16 @@ from config import (authoringKey, authoringEndpoint, predictionEndpoint)
 
 import json, time
 
-# <AuthoringSortModelObject>
 def get_child_id(model, childName):
 
-
     theseChildren = next(filter((lambda child: child.name == childName), model.children))
-    
     ChildId = theseChildren.id
-    print("ChildId :", ChildId)
 
     return ChildId
 
 
-def get_grandchild_id(model, childName, grandChildName):
-    
-    theseChildren = next(filter((lambda child: child.name == childName), model.children))
-    theseGrandchildren = next(filter((lambda child: child.name == grandChildName), theseChildren.children))
-
-    grandChildId = theseGrandchildren.id
-
-    return grandChildId
-
 def load_json(file_name):
+
     with open(file_name, "r") as f:
         return json.load(f)
 
@@ -36,7 +24,7 @@ def quickstart():
 
     # Set variables ----------------------------------------------------
 
-    appName = "BookFlight-v13-SDK"
+    appName = "BookFlight-Luis-model"
     versionId = "0.1"
 
     # Authenticate client------------------------------------------------
@@ -68,35 +56,14 @@ def quickstart():
     # Create entity(ies) -------------------------------------------------
 
     # Add pre_built entity :
-
     client.model.add_prebuilt(app_id, versionId, prebuilt_extractor_names=["money", "geographyV2", "datetimeV2"])
 
 
-    # Create ML entity :
-    mlEntityDefinition = [
-            {
-                "name": "From",
-                "children": [
-                    {"name": "Airport"}
-                ]
-            },
-            {
-                "name": "To",
-                "children": [
-                    {"name": "Airport"}
-                ]
-            },
-            {"name": "Departure_date"},
-            {"name": "Return_date"},
-            {"name": "Budget"}
-        ]
-    
+    # Create Airport entity :  
     airport_entity = {"name": "Airport"}
 
 
     # Add ML entity to app
-
-    #modelId = client.model.add_entity(app_id, versionId, name="From", children=airport_entity)
     from_entity = client.model.add_entity(app_id, versionId, name="From", children=[airport_entity] )
     to_entity = client.model.add_entity(app_id, versionId, name="To", children=[airport_entity])
 
@@ -112,18 +79,6 @@ def quickstart():
     from_airport_id = get_child_id(from_object, "Airport")
     to_airport_id = get_child_id(to_object, "Airport")
 
-    """departure_fromId = get_grandchild_id(modelObject, "location", "departure_location")
-    return_fromId = get_grandchild_id(modelObject, "location", "return_location")
-    departure_date = get_grandchild_id(modelObject, "date", "departure_date")
-    return_dateId = get_grandchild_id(modelObject, "date", "return_date")
-    print("Liste des entités :", [child.name for child in modelObject.children])
-    travelersId = get_child_id(modelObject, "travelers")"""
-    
-    """departure_date_id = departure_date_entity.id
-    return_date_id = return_date_entity.id
-    budget_id = budget_entity.id"""
-    
-
     # Add model as feature to subentity model
     prebuiltFeaturedDefinition = {"model_name" : "geographyV2", "is_required": False}
     client.features.add_entity_feature(app_id, versionId, from_airport_id, prebuiltFeaturedDefinition)
@@ -138,9 +93,7 @@ def quickstart():
     # Add utterances examples to intents ----------------------------------------------
 
     # Define labeled examples :
-
-
-    BookFlight_json_file = "../training_data/training_data_50_ex.json"
+    BookFlight_json_file = "./data/training_data_50_ex.json"
     BookFlight_utterance = load_json(BookFlight_json_file)
     print("\nBookFlight_utterance : ", BookFlight_utterance)
 

@@ -2,17 +2,36 @@ import requests
 import json
 import string
 from sklearn.metrics import precision_recall_fscore_support
-from .config import (AUTHORING_KEY, APP_ID, APP_VERSION_ID, PREDICTION_ENDPOINT, SLOT_NAME)
+from config import (authoringKey, app_id, authoringEndpoint, slot_name)
 
-connexion_string = f"{PREDICTION_ENDPOINT}luis/prediction/v3.0/apps/{APP_ID}/slots/{SLOT_NAME}/predict"
+connexion_string = f"{authoringEndpoint}luis/prediction/v3.0/apps/{app_id}/slots/{slot_name}/predict"
 headers = {}
 
 class performance_evaluator():
+    """
+    Evaluate Luis model performances for both intents and entities predictions.
+    """
+
+
     def __init__(self, ground_truth, entities_name):
+        """
+        Input :
+            ground_truth (dict) : dictionnary built from a json file that contains utterances and their related intents and entities
+            entities_name (list of str) : list of the names of the entities
+        """
         self.ground_truth = ground_truth
         self.entities_name = entities_name
 
+
     def get_prediction(self, text):
+        """
+        Send a request to the Luis model to get the predictions of a given utterance
+        Input :
+            text (str) : utterance to predict
+        Output :
+            response.json() : json file containing the predictions
+        """
+
         params = {
         'query': text,
         'timezoneOffset': '0',
@@ -20,13 +39,30 @@ class performance_evaluator():
         'show-all-intents': 'true',
         'spellCheck': 'false',
         'staging': 'false',
-        'subscription-key': AUTHORING_KEY
+        'subscription-key': authoringKey
         }
         response = requests.get(connexion_string, headers=headers, params=params)
         return response.json()
 
 
     def get_ground_truth_entity(self, entities, entity_name):
+        """
+        Remove punctuation from ground truch entities so that we can compare it to prediction
+        Input :
+            entities (list of dict) : list of entities labeled in a single turn. Ex of format :
+                [{'entity': 'To',
+                    'startPos': 59,
+                    'endPos': 65,
+                    'children': [{'entity': 'Airport', 'startPos': 59, 'endPos': 65}]},
+                {'entity': 'From',
+                    'startPos': 37,
+                    'endPos': 55,
+                    'children': [{'entity': 'Airport', 'startPos': 37, 'endPos': 55}]},
+                {'entity': 'Departure_date', 'startPos': 104, 'endPos': 113}]
+            entity_name (str) : ex: 'To'
+        Output :
+            entity (str) : value of entity without punctuation (ex : october 16th)
+        """
         
         try:
             entity = entities[entity_name][0]["text"]
@@ -37,8 +73,14 @@ class performance_evaluator():
 
 
     def evaluate_intents_performance(self):
+        """
+        Calculate intents prediction performance
+        Output :
+            precision (float)
+            recall (float)
+            f_score (float)
+        """
         # Get true intents
-        text_to_predict = []
         intents_true = []
         intents_pred = []
 
@@ -52,7 +94,7 @@ class performance_evaluator():
             'show-all-intents': 'true',
             'spellCheck': 'false',
             'staging': 'false',
-            'subscription-key': AUTHORING_KEY
+            'subscription-key': authoringKey
             }
             response = requests.get(connexion_string, headers=headers, params=params)
             response = response.json()
@@ -71,6 +113,30 @@ class performance_evaluator():
 
 
     def build_dictionnaries(self, turn):
+        """
+        build groud truth and prediction dictionnaries for a single turn
+        Input :
+            turn (dict) : dictionnary of labeled intent and entities. Ex of format :
+                {'text': 'Good day, please book me a trip from Vancouver, Jamaica to Recife. I would like to leave for 17 days on August 24.',
+                    'intent': 'BookFlight',
+                    'entities': [{'entity': 'To',
+                        'startPos': 59,
+                        'endPos': 65,
+                        'children': [{'entity': 'Airport', 'startPos': 59, 'endPos': 65}]},
+                            {'entity': 'From',
+                            'startPos': 37,
+                            'endPos': 55,
+                        'children': [{'entity': 'Airport', 'startPos': 37, 'endPos': 55}]},
+                            {'entity': 'Departure_date', 'startPos': 104, 'endPos': 113}]}
+        Output :
+            groud_truth_dict (dict) : dictionnary of ground truth entities. Ex of format :
+                {'From': 'Vancouver',
+                 'To': 'Recife',
+                 'Departure_date': 'August 24',
+                 'Return_date': '',
+                 'budget': ''}
+            predcition_dict (dict) : dictionnary of predicted entities. Same format as groud_truth_dict.
+        """
 
         ground_truth_dict = {}
         prediction_dict = {}
@@ -112,6 +178,14 @@ class performance_evaluator():
 
 
     def evaluate_entities_performance(self):
+        """
+        build y_true and y_pred lists for each entity so that we can calculate precision and recall
+        Output :
+            y_true_dict (dict) : dictionnary of true label for each entity
+                (ex : {"From" : [ 0, 1, 1, 0], "To" : [...]...})
+            y_pred_dict (dict) : dictionnary of predicted label for each entity. Same format as y_true
+            correct_preds (list of bool) : number of correct predictions
+        """
         y_true_dict = {}
         y_pred_dict = {}
         for entity in self.entities_name:
@@ -158,7 +232,7 @@ class performance_evaluator():
  
 def main():
     # Load data for evaluation
-    evaluation_file_name = "./Test_files/v5/evaluation_test-05.json"
+    evaluation_file_name = "./data/evaluation_data.json"
     with open(evaluation_file_name, "r") as f:
         ground_truth = json.load(f)
 

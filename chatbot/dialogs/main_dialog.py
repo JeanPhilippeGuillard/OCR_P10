@@ -72,13 +72,10 @@ class MainDialog(ComponentDialog):
             message_text, message_text, InputHints.expecting_input
         )
 
-        answer = await step_context.prompt(
+        return await step_context.prompt(
             TextPrompt.__name__, PromptOptions(prompt=prompt_message)
         )
-        """turn_text = step_context.context.activity.text
-        print("Turn input", turn_text)
-        self.telemetry_client.track_trace("Turn input", {"Turn input": turn_text}, 0)"""
-        return answer
+
 
     async def act_step(self, step_context: WaterfallStepContext) -> DialogTurnResult:
         if not self._luis_recognizer.is_configured:
@@ -91,25 +88,21 @@ class MainDialog(ComponentDialog):
         intent, luis_result = await LuisHelper.execute_luis_query(
             self._luis_recognizer, step_context.context
         )
-        luis_input = step_context.context.activity.text
-        print("Luis input : ", luis_input)
-        self.telemetry_client.track_trace("Luis input", {"Luis input": luis_input})
 
         if intent == Intent.BOOK_FLIGHT.value and luis_result:
-            # Show a warning for Origin and Destination if we can't resolve them.
-            """await MainDialog._show_warning_for_unsupported_cities(
-                step_context.context, luis_result
-            )"""
 
+            # export luis "understanding" as a trace for performance improvement
+            luis_understanding = {}
+            luis_understanding["1 - Input"] = step_context.context.activity.text
+            luis_understanding["2 - Destination airport"] = luis_result.destination
+            luis_understanding["3 - Origin airport"] = luis_result.origin
+            luis_understanding["4 - Departure date"] = luis_result.departure_date
+            luis_understanding["5 - Return date"] = luis_result.return_date
+            luis_understanding["6 - Budget"] = luis_result.budget
+            self.telemetry_client.track_trace("Luis understanding", luis_understanding, "INFO")
+            
             # Run the BookingDialog giving it whatever details we have from the LUIS call.
             return await step_context.begin_dialog(self._booking_dialog_id, luis_result)
-
-            """if intent == Intent.GET_WEATHER.value:
-                get_weather_text = "TODO: get weather flow here"
-                get_weather_message = MessageFactory.text(
-                    get_weather_text, get_weather_text, InputHints.ignoring_input
-                )
-                await step_context.context.send_activity(get_weather_message)"""
 
         else:
             didnt_understand_text = (
@@ -139,17 +132,3 @@ class MainDialog(ComponentDialog):
 
         prompt_message = "What else can I do for you?"
         return await step_context.replace_dialog(self.id, prompt_message)
-
-    """@staticmethod
-    async def _show_warning_for_unsupported_cities(
-        context: TurnContext, luis_result: BookingDetails
-    ) -> None:
-        if luis_result.unsupported_airports:
-            message_text = (
-                f"Sorry but the following airports are not supported:"
-                f" {', '.join(luis_result.unsupported_airports)}"
-            )
-            message = MessageFactory.text(
-                message_text, message_text, InputHints.ignoring_input
-            )
-            await context.send_activity(message)"""

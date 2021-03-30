@@ -10,7 +10,6 @@ from botbuilder.schema import InputHints
 from .cancel_and_help_dialog import CancelAndHelpDialog
 from .departure_date_resolver_dialog import DepartureDateResolverDialog
 from .return_date_resolver_dialog import ReturnDateResolverDialog
-from dialogs import check_date_dialog
 
 
 class BookingDialog(CancelAndHelpDialog):
@@ -193,7 +192,7 @@ class BookingDialog(CancelAndHelpDialog):
         properties["departure_date"] = booking_details.departure_date
         properties["return_date"] = booking_details.return_date
         properties["budget"] = booking_details.budget
-        self.telemetry_client.track_trace("bad answer", properties, 3)
+        self.telemetry_client.track_trace("bad answer", properties, "WARNING")
 
         return await step_context.end_dialog()
 

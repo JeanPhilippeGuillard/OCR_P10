@@ -14,8 +14,6 @@ from botbuilder.dialogs.prompts import (
 )
 from botbuilder.schema import InputHints
 from .cancel_and_help_dialog import CancelAndHelpDialog
-from dialogs import check_date_dialog
-
 
 class DepartureDateResolverDialog(CancelAndHelpDialog):
     def __init__(self, dialog_id: str = None,

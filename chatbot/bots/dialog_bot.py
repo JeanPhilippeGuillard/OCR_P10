@@ -40,9 +40,6 @@ class DialogBot(ActivityHandler):
         # Save any state changes that might have occurred during the turn.
         await self.conversation_state.save_changes(turn_context, False)
         await self.user_state.save_changes(turn_context, False)
-        print("texte du turn_context :", turn_context.activity.text)
-        #turn_context.activity.create_trace("dialog value", turn_context.activity.text)
-        #self.telemetry_client.track_trace("dialog value", turn_context.activity.text)
 
 
     @property

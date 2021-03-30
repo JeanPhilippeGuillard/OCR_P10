@@ -37,9 +37,8 @@ from flight_booking_recognizer import FlightBookingRecognizer
 import nest_asyncio
 nest_asyncio.apply()
 
-
 CONFIG = DefaultConfig()
-print("instrumentation key :", CONFIG.INSTRUMENTATION_KEY)
+
 
 # Create adapter.
 # See https://aka.ms/about-bot-adapter to learn more about how bots work.

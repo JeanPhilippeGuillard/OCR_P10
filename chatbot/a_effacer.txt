@@ -1,0 +1,2 @@
+appId : ab78726f-f700-4ff0-b4b8-dbe453a8c949
+pwd : JPG_flightbooking_bot_1

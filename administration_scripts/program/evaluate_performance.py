@@ -2,7 +2,7 @@ import requests
 import json
 import string
 from sklearn.metrics import precision_recall_fscore_support
-from .config import (AUTHORING_KEY, APP_ID, APP_VERSION_ID, PREDICTION_ENDPOINT, SLOT_NAME)
+from program.config import (AUTHORING_KEY, APP_ID, APP_VERSION_ID, PREDICTION_ENDPOINT, SLOT_NAME)
 
 connexion_string = f"{PREDICTION_ENDPOINT}luis/prediction/v3.0/apps/{APP_ID}/slots/{SLOT_NAME}/predict"
 headers = {}

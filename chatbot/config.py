@@ -11,8 +11,8 @@ class DefaultConfig:
     """ Bot Configuration """
 
     PORT = 3978
-    APP_ID = os.environ.get("MicrosoftAppId", "")
-    APP_PASSWORD = os.environ.get("MicrosoftAppPassword", "")
+    APP_ID = os.environ.get("MicrosoftAppId", "ab78726f-f700-4ff0-b4b8-dbe453a8c949") # jpg-flightbooking-service
+    APP_PASSWORD = os.environ.get("MicrosoftAppPassword", "JPG_flightbooking_bot_1") # jpg-flightbooking-service
     
     LUIS_APP_ID = os.environ.get("LuisAppId", "2ab9cc99-4a8f-465e-8e5a-88356c84dc84") # FlightBooking-v13-SDK
     LUIS_API_KEY = os.environ.get("LuisAPIKey", "39e2caa19666427ebe7835c12e70fbd5") # jpg-luis-2-authoring

@@ -11,6 +11,8 @@ class DefaultConfig:
     """ Bot Configuration """
 
     PORT = 3978
+    #APP_ID = os.environ.get("MicrosoftAppId", "") # for test with the emulator
+    #APP_PASSWORD = os.environ.get("MicrosoftAppPassword", "") # for test with the emulator
     APP_ID = os.environ.get("MicrosoftAppId", "ab78726f-f700-4ff0-b4b8-dbe453a8c949") # jpg-flightbooking-service
     APP_PASSWORD = os.environ.get("MicrosoftAppPassword", "JPG_flightbooking_bot_1") # jpg-flightbooking-service
     

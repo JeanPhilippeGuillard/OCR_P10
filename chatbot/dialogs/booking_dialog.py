@@ -182,16 +182,20 @@ class BookingDialog(CancelAndHelpDialog):
         :param step_context:
         :return DialogTurnResult:
         """
-        booking_details = step_context.options
-        if step_context.result:
-            return await step_context.end_dialog(booking_details)
 
+        booking_details = step_context.options
         properties = {}
         properties["destination"] = booking_details.destination
         properties["origin"] = booking_details.origin
         properties["departure_date"] = booking_details.departure_date
         properties["return_date"] = booking_details.return_date
         properties["budget"] = booking_details.budget
+
+        if step_context.result:
+            self.telemetry_client.track_trace("good answer", properties, "INFO")
+            return await step_context.end_dialog(booking_details)
+
+        
         self.telemetry_client.track_trace("bad answer", properties, "WARNING")
 
         return await step_context.end_dialog()
